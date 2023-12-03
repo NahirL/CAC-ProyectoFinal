@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Header-->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">PetShop</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Adquiera los mejores productos para su mascotas</p>
+        </div>
+    </div>
+</header>
+<!-- Section-->
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-3 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            {% for product in products%}
+            <div class="col mb-5">
+                <div class="card h-100 text-bg-dark mb-3">
+                    <!-- Imagen producto-->
+                    <img class="card-img-top h-100" src="{{ product.image.url }}" alt="Imagen del producto" />
+                    <br>
+                    <!-- Categoria producto-->
+                    <div class="d-flex justify-content-center small text-warning mb-2">
+                        <div class="bi-star-fill"></div>
+                        &nbsp;&nbsp;{{ product.category }}&nbsp;&nbsp;
+                        <div class="bi-star-fill"></div>
+                    </div>
+                    <!-- Detalle producto-->
+                    <div class="card-body h-100 p-4">
+                        <div class="text-center">
+                            <!-- Nombre producto-->
+                            <h5 class="fw-bolder">{{ product.name }}</h5>
+                            <!-- Precio producto-->
+                            ${{ product.price }}
+                            <br>
+                        </div>
+                    </div>
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center"><a class="btn btn-outline-light mt-auto"
+                                href="{% url 'product' product.id %}">Ver producto</a></div>
+                    </div>
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center"><a class="btn btn-outline-light mt-auto" href="#">Agregar</a></div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+</section>
+{% endblock %}

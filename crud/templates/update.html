@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Tablas de productos -->
+<br><br>
+<h2 class="text-center">Productos</h2>
+
+
+<form class="w-50 shadow mx-auto p-4 m-3" method="POST" enctype="multipart/form-data"
+    action="{% url 'update' product.id %}">{% csrf_token %}
+
+
+    <input type="hidden" name="id" value="{{ product.id }}">
+
+    Nombre: <input type="text" name="name" class="form-control" required value="{{ product.name }}">
+
+    Precio: <input type="text" name="price" class="form-control" required value="{{ product.price }}">
+
+    Categoria: <input type="text" name="category" class="form-control" required value="{{ product.category }}">
+
+    Descripción: <textarea class="form-control" name="description" cols="30"
+        rows="1">{{ product.description }}</textarea>
+
+    <br>
+
+    <img v-if="imagen_url && !imagenSeleccionada" id="imagenActual" src="{{ product.image.url }}"
+        alt="{{ product.name }} Image" style="max-width: 100px; max-height: 100px;">
+
+    <br><br>
+
+    <input type="file" name="image" id="inputImagen" class="form-control" required value="{{ product.image }}">
+    <br><br>
+
+    <input type="submit" value="Actualizar" class="btn btn-warning">
+
+</form>
+
+<br>
+{% endblock %}

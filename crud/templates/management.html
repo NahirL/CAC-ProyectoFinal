@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<!-- Header-->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Administrar productos</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Agregue, edite o elimine sus productos</p>
+        </div>
+    </div>
+</header>
+
+<br>
+<h2 class="text-center">Agregar productos</h2>
+
+<form class="w-50 shadow mx-auto p-4 m-3" method="POST" enctype="multipart/form-data" action="{% url 'add' %}">{%csrf_token %}
+
+    Nombre: <input type="text" name="name" class="form-control" required>
+
+    Precio: <input type="text" name="price" class="form-control" required>
+
+    Categoria: <input type="text" name="category" class="form-control" required>
+
+    Descripción: <textarea class="form-control" name="description" cols="30" rows="1"></textarea>
+
+    Imagen: <input type="file" name="image" class="form-control" required>
+    <br>
+    <input type="submit" value="Guardar" class="btn btn-primary">
+
+</form>
+
+
+<br><br>
+<!-- Tablas de productos -->
+<h3 class="text-center">Lista de Productos</h3>
+
+<table class="table table-bordered border-black table-light w-75 mx-auto text-center">
+    <tr class="table-dark">
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>Categoria</th>
+        <th>Descripción</th>
+        <th>Imagen</th>
+        <th colspan="2">Opciones</th>
+    </tr>
+    <br>
+
+    {% for product in products %}
+    <tr>
+        <td>{{ product.name }}</td>
+        <td>${{ product.price }}</td>
+        <td>{{ product.category }}</td>
+        <td>{{ product.description }}</td>
+        <td>
+            <img src="{{ product.image.url }}" alt="{{ product.name }} Image" style="max-width: 100px; max-height: 100px;">
+        </td>
+
+        <td>
+            <form action="{% url 'delete' product.id %}" method="POST">{% csrf_token %}
+                <button class="btn btn-danger"
+                    onclick="return confirm('¿Deseas eliminar este producto?')">Eliminar</button>
+            </form>
+        </td>
+        <td>
+            <form action="{% url 'detalle' product.id %}">{% csrf_token %}
+                <button class="btn btn-warning">Editar</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<br>
+{% endblock %}
